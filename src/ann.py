@@ -26,3 +26,4 @@ def forward(X, W, b, act_fn=logistic):
 
     y = map(lambda yi: softmax(yi), np.asarray(Z[-1]))
     return np.asmatrix(y)
+

@@ -1,11 +1,11 @@
-import forward
+import ann
 import numpy as np
 import sklearn.datasets
 import matplotlib.pyplot as plt
 
 # Generate a dataset and plot it
 np.random.seed(0)
-N = 200
+N = 30
 X, y = sklearn.datasets.make_moons(N, noise=0.20)
 K = X.shape[1]
 
@@ -24,6 +24,6 @@ for h in range(H):
     W[h] = np.asmatrix(np.random.randn(nnode_prev,nnodes[h]))
     b[h] = np.asmatrix(np.random.randn(nnodes[h]))
 
-reload(forward)
-y_hat = forward.forward(X, W, b)
-
+reload(ann)
+y_hat = ann.forward(X, W, b)
+pred = map(lambda yi: np.argmax(yi), y_hat.tolist())
