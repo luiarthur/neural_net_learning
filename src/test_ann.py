@@ -26,4 +26,6 @@ for h in range(H):
 
 reload(ann)
 y_hat = ann.forward(X, W, b)
-pred = map(lambda yi: np.argmax(yi), y_hat.tolist())
+
+ann.predict(y_hat)
+ann.loss(y_hat, y)

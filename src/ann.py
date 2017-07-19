@@ -24,6 +24,22 @@ def forward(X, W, b, act_fn=logistic):
         M = X if h == 0 else act_fn(Z[h-1])
         Z[h] = M * W[h] + np.kron(np.ones((N,1)), b[h])
 
-    y = map(lambda yi: softmax(yi), np.asarray(Z[-1]))
-    return np.asmatrix(y)
+    y_hat = map(lambda yi: softmax(yi), np.asarray(Z[-1]))
+    return np.asmatrix(y_hat)
+
+def loss(y_hat, y):
+    N = len(y)
+    assert y_hat.shape[0] == N, "Required: y_hat.shape[0] == len(y)"
+
+    C = y_hat.shape[1] # Number of classes
+    y_true_mat = np.zeros( (N,C) )
+    for n in range(N):
+        y_true_mat[n, y[n]] = 1
+
+    loss = -np.sum(y_true_mat * np.log(np.asarray(y_hat)))
+
+    return loss / N
+
+def predict(y_hat):
+    return map(lambda yi: np.argmax(yi), y_hat.tolist())
 
